@@ -1,0 +1,9 @@
+<div>
+    {% if 'info' == get_command() %}
+        {%  include "commandViews/infoContent.html" %}
+    {% elif "containerList" == get_command()  %}
+        {%  include "commandViews/containersListContent.html" %}
+    {% elif "imagesList" == get_command() %}
+        {%  include "commandViews/imagesListContent.html" %}
+    {% endif %}
+</div>

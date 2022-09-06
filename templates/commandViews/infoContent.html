@@ -1,0 +1,74 @@
+<div class="d-flex" style="width: 85vw; height: 80vh">
+    <table class="table table-striped table-sm">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">Wartość</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ID</td>
+                <td>{{ response.ID }}</td>
+            </tr>
+            <tr>
+                <td>Liczba kontenerów</td>
+                <td>{{ response.Containers }}</td>
+            </tr>
+            <tr>
+                <td>Liczba uruchomionych kontenerów</td>
+                <td>{{ response.ContainersRunning }}</td>
+            </tr>
+            <tr>
+                <td>Liczba zapauzowanych kontenerów</td>
+                <td>{{ response.ContainersPaused }}</td>
+            </tr>
+            <tr>
+                <td>Liczba zatrzymanych kontenerów</td>
+                <td>{{ response.ContainersStopped }}</td>
+            </tr>
+            <tr>
+                <td>Liczba obrazów</td>
+                <td>{{ response.Images }}</td>
+            </tr>
+            <tr>
+                <td>Driver</td>
+                <td>{{ response.Driver }}</td>
+            </tr>
+            <tr>
+                <td>DriverStatus</td>
+                <td>
+                    <ul>
+                        {% for item in response.DriverStatus %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% for plugin, pluginValues in response.Plugins.items() %}
+            <tr>
+                <td>Plugin - {{ plugin }}</td>
+                <td>{{ pluginValues }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>System operacyjny</td>
+                <td>{{ response.OperatingSystem }} </td>
+            </tr>
+            <tr>
+                <td>Wersja systemu operacyjnego</td>
+                <td>{{ response.OSVersion }} </td>
+            </tr>
+            <tr>
+                <td>Typ systemu operacyjnego</td>
+                <td>{{ response.OSType }} </td>
+            </tr>
+            <tr>
+                <td>Architektura</td>
+                <td>{{ response.Architecture }} </td>
+            </tr>
+            <tr>
+                <td>Czas systemu</td>
+                <td>{{ response.SystemTime }} </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

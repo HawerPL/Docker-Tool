@@ -1,0 +1,41 @@
+<div class="d-flex" style="width: 85vw; height: 80vh">
+    <table class="table table-striped table-sm">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">Kontener</th>
+        </thead>
+        <tbody>
+            {% for container in response %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <span>Nazwa kontenera:</span>
+                    <ul>
+                    {% for name in container.Names %}
+                        <li>{{ name }}</li>
+                    {% endfor %}
+                    </ul>
+                    <span>ID: {{ container.Id }}</span>
+                    <span>Obraz: {{ container.Image }}</span><br>
+                    <span>ID obrazu: {{ container.ImageID }}</span><br>
+                    <span>Komendy: {{ container.Command }}</span><br>
+                    <span>Stan: {{ container.State }}</span><br>
+                    <span>Status: {{ container.Status }}</span><br>
+                    <span>Porty:</span>
+                    <ul>
+                    {% for port in container.Ports %}
+                        <li>{{ port.IP }}:{{ port.PrivatePort }} -> {{ port.PublicPort }}/{{ port.Type }}</li>
+                    {% endfor %}
+                    </ul>
+                    <span>Mounts:</span>
+                    <ul>
+                    {% for mount in container.Mounts %}
+                        <li>{{ mount.Type }} -- {{ mount.Source }} -> {{ mount.Destination }}:{{ mount.Mode }}, Propagation - {{ mount.Propagation }}</li>
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

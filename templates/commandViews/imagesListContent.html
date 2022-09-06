@@ -1,0 +1,29 @@
+<div class="d-flex" style="width: 85vw; height: 80vh">
+    <table class="table table-striped table-sm">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">Obraz</th>
+        </thead>
+        <tbody>
+            {% for image in response %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                        <span>ID: {{ image.Id }}</span>
+                        {% if image.Labels.Name %}<br>
+                        <span>Label name: {{ image.Labels.Name }}</span>
+                        {% endif %}<br>
+                    Tagi:
+                    <ul>
+                        {% for repoTag in image.RepoTags %}
+                        <li>{{ repoTag }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

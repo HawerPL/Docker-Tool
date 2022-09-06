@@ -1,0 +1,17 @@
+<div>
+        <table class="table table-striped table-sm">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">tag</th>
+            </thead>
+            <tbody>
+                {% for item in get_tags() %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+</div>
