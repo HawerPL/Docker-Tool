@@ -3,13 +3,14 @@ from flask import Flask
 from flask import render_template
 from flask import request
 import os
+import docker
 import requests as req
 import commands as cmd
 
 app = Flask(__name__)
 registry = os.getenv('REGISTRY_ADDRESS')
-dockerEngines = os.getenv('DOCKER_ENGINE_ADDRESS')
-
+dockerEngines = os.getenv('DOCKER_HOST')
+client = docker.from_env()
 
 @app.route('/')
 def get_index():
@@ -21,9 +22,10 @@ def get_registry_view():
     return render_template('registryView.html', name='registryView', registry=registry)
 
 
-@app.route('/management')
+@app.route('/management', methods=['GET', 'POST'])
 def get_management_view():
     response = ""
+    result = ""
     command = get_command()
     docker_engine = get_docker_engine()
     if command == 'info':
@@ -33,12 +35,14 @@ def get_management_view():
     elif command == "imagesList":
         response = cmd.get_images_list(docker_engine)
     elif command == "exec":
-        response = "res"
+        response = cmd.get_container_list(docker_engine)
+        if request.method == "POST":
+            result = "aa"
     elif command == "volumesList":
         response = "res"
     elif command == "networkList":
         response = "res"
-    return render_template('managementView.html', name='managementView', dockerEngines=dockerEngines, response=response)
+    return render_template('managementView.html', name='managementView', dockerEngines=dockerEngines, response=response, result=result)
 
 
 @app.template_global(name='get_repositories')

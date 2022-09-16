@@ -5,5 +5,7 @@
         {%  include "commandViews/containersListContent.html" %}
     {% elif "imagesList" == get_command() %}
         {%  include "commandViews/imagesListContent.html" %}
+    {% elif "exec" == get_command() %}
+        {%  include "commandViews/execContent.html" %}
     {% endif %}
 </div>

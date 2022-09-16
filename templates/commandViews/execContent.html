@@ -1,1 +1,34 @@
 <!--Tu powinien być input text z komendą i input z id kontenera, możliwośc pobrania listy koneterów, + możliwość predefionwoania komend w pliku konfiguracyjnym np. w liście roziwjanej nginx -s reload -->
+<div class="d-flex flex-column" style="width: 85vw; height: 80vh">
+    <form class="p-3" action="/management?docker_engine={{ dockerEngines }}&command=exec" method="POST">
+        <h3>Exec</h3>
+        <div class="row p-1">
+            <div class="col-md-5">
+                <label>Kontener</label>
+                <select class="form-control">
+                    {% for container in response %}
+                    <option value="{{ container.short_id }}"> {{ container.attrs.Name }} ({{ container.short_id }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-5">
+                <label>Polecenie</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-md-2 d-flex">
+                <div class="align-self-end">
+                    <button class="btn btn-secondary" type="submit">Wykonaj</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped table-sm">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">Obraz</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>

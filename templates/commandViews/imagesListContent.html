@@ -9,16 +9,24 @@
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>
-                        <span>ID: {{ image.Id }}</span>
-                        {% if image.Labels.Name %}<br>
-                        <span>Label name: {{ image.Labels.Name }}</span>
-                        {% endif %}<br>
+                    <span>ID: {{ image.id }}</span><br>
+                    <span>Short ID: {{ image.short_id[7:] }}</span><br>
+                        {% if image.labels.name %}
+                            Nazwa etykiety:
+                            <ul>
+                            {% for label in image.labels.items() %}
+                                <li>{{ label }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% if image.tags %}
                     Tagi:
                     <ul>
-                        {% for repoTag in image.RepoTags %}
-                        <li>{{ repoTag }}</li>
+                        {% for tag in image.tags %}
+                        <li>{{ tag }}</li>
                         {% endfor %}
                     </ul>
+                    {% endif %}
 
 
                 </td>

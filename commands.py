@@ -1,10 +1,13 @@
 import requests as req
+import docker
 from flask import request
+
+client = docker.from_env()
 
 
 def get_info(docker_engine):
     try:
-        response = req.get(docker_engine + '/info').json()
+        response = client.info()
     except req.exceptions.ConnectionError:
         response = ""
     return response
@@ -12,7 +15,7 @@ def get_info(docker_engine):
 
 def get_images_list(docker_engine):
     try:
-        response = req.get(docker_engine + '/images/json').json()
+        response = client.images.list()
     except req.exceptions.ConnectionError:
         response = ""
     return response
@@ -20,7 +23,17 @@ def get_images_list(docker_engine):
 
 def get_container_list(docker_engine):
     try:
-        response = req.get(docker_engine + '/containers/json').json()
+        response = client.containers.list(all=True)
     except req.exceptions.ConnectionError:
         response = ""
     return response
+
+
+def execute_command(docker_engine, container_id, command):
+    try:
+        container = client.containers.get(container_id)
+        response = container.exec_run(command)
+    except req.exceptions.ConnectionError:
+        response = ""
+    return response
+

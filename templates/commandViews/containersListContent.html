@@ -9,30 +9,36 @@
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>
-                    <span>Nazwa kontenera:</span>
-                    <ul>
-                    {% for name in container.Names %}
-                        <li>{{ name }}</li>
-                    {% endfor %}
-                    </ul>
-                    <span>ID: {{ container.Id }}</span>
-                    <span>Obraz: {{ container.Image }}</span><br>
-                    <span>ID obrazu: {{ container.ImageID }}</span><br>
-                    <span>Komendy: {{ container.Command }}</span><br>
-                    <span>Stan: {{ container.State }}</span><br>
-                    <span>Status: {{ container.Status }}</span><br>
+                    <span>Nazwa kontenera: {{ container.attrs.Name }}</span><br>
+                    <span>ID: {{ container.id }}</span><br>
+                    <span>Short ID: {{ container.short_id }}</span><br>
+                    <span>Obrazy: {{ container.attrs.Image }}</span><br>
+                    <span>ID obrazu: {{ container.attrs.Image }}</span><br>
+                    <span>Komendy: {{ container.attrs.Path }} {{ container.attrs.Args }}</span><br>
+                    <span>Status: {{ container.status }}</span><br>
+                    {% if container.attrs.NetworkSettings.Ports %}
                     <span>Porty:</span>
                     <ul>
-                    {% for port in container.Ports %}
-                        <li>{{ port.IP }}:{{ port.PrivatePort }} -> {{ port.PublicPort }}/{{ port.Type }}</li>
-                    {% endfor %}
-                    </ul>
-                    <span>Mounts:</span>
-                    <ul>
-                    {% for mount in container.Mounts %}
-                        <li>{{ mount.Type }} -- {{ mount.Source }} -> {{ mount.Destination }}:{{ mount.Mode }}, Propagation - {{ mount.Propagation }}</li>
-                    {% endfor %}
-                    </ul>
+                        {% for key, value in container.attrs.NetworkSettings.Ports.items() %}
+                            <li>{{ key }}
+                                <ul>
+                                {% for val in value %}
+                                    <li> {{ val.HostIp }} : {{ val.HostPort }} </li>
+                                {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if container.attrs.Mounts %}
+                        <span>Mounts:</span>
+                        <ul>
+                        {% for mount in container.attrs.Mounts %}
+                            <li>{{ mount.Type }} -- {{ mount.Source }} -> {{ mount.Destination }}:{{ mount.Mode }}, Propagation - {{ mount.Propagation }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+{#                <span>{{ container.attrs }}</span><br>#}
                 </td>
             </tr>
             {% endfor %}
