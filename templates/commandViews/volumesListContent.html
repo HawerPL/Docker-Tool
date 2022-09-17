@@ -1,0 +1,28 @@
+<div class="d-flex" style="width: 85vw; height: 80vh">
+    <table class="table table-striped table-sm">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">Woluminy</th>
+        </thead>
+        <tbody>
+            {% for volume in response %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <span>ID: {{ volume.id }}</span><br>
+                    <span>Short ID: {{ volume.short_id }}</span><br>
+                    <span>Obrazy: {{ volume.attrs.Image }}</span><br>
+                    <span>ID obrazu: {{ volume.attrs.Image }}</span><br>
+                    <span>Mountpoint: {{ volume.attrs.Mountpoint }}</span><br>
+                    <span>Nazwa: {{ volume.attrs.Name }}</span><br>
+                    <span>Opcje: {{ volume.attrs.Options }}</span><br>
+                    <span>Scope: {{ volume.attrs.Scope }}</span><br>
+                    <span>Driver: {{ volume.attrs.Driver }}</span><br>
+                    <span>Labels: {{ volume.attrs.Labels }}</span><br>
+                    <span>Data utworzenia: {{ volume.attrs.CreatedAt }}</span><br>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

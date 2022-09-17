@@ -1,11 +1,17 @@
 <div>
     {% if 'info' == get_command() %}
         {%  include "commandViews/infoContent.html" %}
-    {% elif "containerList" == get_command()  %}
+    {% elif "containersList" == get_command()  %}
         {%  include "commandViews/containersListContent.html" %}
     {% elif "imagesList" == get_command() %}
         {%  include "commandViews/imagesListContent.html" %}
     {% elif "exec" == get_command() %}
         {%  include "commandViews/execContent.html" %}
+    {% elif "volumesList" == get_command() %}
+        {%  include "commandViews/volumesListContent.html" %}
+    {% elif "networksList" == get_command() %}
+        {%  include "commandViews/networksListContent.html" %}
+    {% elif "pluginsList" == get_command() %}
+        {%  include "commandViews/pluginsListContent.html" %}
     {% endif %}
 </div>

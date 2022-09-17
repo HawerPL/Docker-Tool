@@ -37,3 +37,27 @@ def execute_command(docker_engine, container_id, command):
         response = ""
     return response
 
+
+def get_volumes_list(docker_engine):
+    try:
+        response = client.volumes.list()
+    except req.exceptions.ConnectionError:
+        response = ""
+    return response
+
+
+def get_networks_list(docker_engine):
+    try:
+        response = client.networks.list()
+    except req.exceptions.ConnectionError:
+        response = ""
+    return response
+
+
+def get_plugins_list(docker_engine):
+    try:
+        response = client.plugins.list()
+    except req.exceptions.ConnectionError:
+        response = ""
+    return response
+

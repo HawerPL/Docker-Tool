@@ -30,19 +30,22 @@ def get_management_view():
     docker_engine = get_docker_engine()
     if command == 'info':
         response = cmd.get_info(docker_engine)
-    elif command == "containerList":
+    elif command == "containersList":
         response = cmd.get_container_list(docker_engine)
     elif command == "imagesList":
         response = cmd.get_images_list(docker_engine)
     elif command == "exec":
         response = cmd.get_container_list(docker_engine)
-        if request.method == "POST":
-            result = "aa"
+        if request.method == 'POST':
+            result = cmd.execute_command(docker_engine, request.form.get('container-id'), request.form.get('command'))
     elif command == "volumesList":
-        response = "res"
-    elif command == "networkList":
-        response = "res"
-    return render_template('managementView.html', name='managementView', dockerEngines=dockerEngines, response=response, result=result)
+        response = cmd.get_volumes_list(docker_engine)
+    elif command == "networksList":
+        response = cmd.get_networks_list(docker_engine)
+    elif command == "pluginsList":
+        response = cmd.get_plugins_list(docker_engine)
+    return render_template('managementView.html', name='managementView', dockerEngines=dockerEngines, response=response,
+                           result=result)
 
 
 @app.template_global(name='get_repositories')

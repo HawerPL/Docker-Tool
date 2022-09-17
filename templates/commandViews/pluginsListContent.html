@@ -1,0 +1,21 @@
+<div class="d-flex" style="width: 85vw; height: 80vh">
+    <table class="table table-striped table-sm">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">Plugin</th>
+        </thead>
+        <tbody>
+            {% for plugin in response %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <span>Nazwa: {{ plugin.name }}</span><br>
+                    <span>ID: {{ plugin.id }}</span><br>
+                    <span>Short ID: {{ plugin.short_id }}</span><br>
+                    <span>Włączony: {{ plugin.enabled }}</span><br>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

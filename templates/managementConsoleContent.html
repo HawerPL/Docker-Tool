@@ -10,7 +10,7 @@
         <li class="list-group-item">
                 <span class="pt-1">
                     <a class="link-secondary"
-                       href="./management?docker_engine={{ dockerEngines }}&command=containerList">Containers</a>
+                       href="./management?docker_engine={{ dockerEngines }}&command=containersList">Containers</a>
                     <span class="d-block text-muted">Wyświetl listę kontenerów</span>
                 </span>
         </li>
@@ -29,19 +29,22 @@
         </li>
         <li class="list-group-item">
                 <span class="pt-1">
-                    <span>Volumes</span>
+                    <a class="link-secondary"
+                       href="./management?docker_engine={{ dockerEngines }}&command=volumesList">Volumes</a>
                     <span class="d-block text-muted">Wyświetl listę woluminów</span>
                 </span>
         </li>
         <li class="list-group-item">
                 <span class="pt-1">
-                    <span>Networks</span>
+                    <a class="link-secondary"
+                       href="./management?docker_engine={{ dockerEngines }}&command=networksList">Networks</a>
                     <span class="d-block text-muted">Wyświetl listę sieci</span>
                 </span>
         </li>
         <li class="list-group-item">
                 <span class="pt-1">
-                    <span>Plugins</span>
+                    <a class="link-secondary"
+                       href="./management?docker_engine={{ dockerEngines }}&command=pluginsList">Plugins</a>
                     <span class="d-block text-muted">Wyświetl listę pluginów</span>
                 </span>
         </li>

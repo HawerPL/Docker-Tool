@@ -5,15 +5,15 @@
         <div class="row p-1">
             <div class="col-md-5">
                 <label>Kontener</label>
-                <select class="form-control">
+                <select class="form-control" name="container-id">
                     {% for container in response %}
-                    <option value="{{ container.short_id }}"> {{ container.attrs.Name }} ({{ container.short_id }})</option>
+                    <option value="{{ container.short_id }}" {% if container.status == "exited" %} disabled {% endif %}> {{ container.attrs.Name }} ({{ container.short_id }})</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-5">
                 <label>Polecenie</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="command">
             </div>
             <div class="col-md-2 d-flex">
                 <div class="align-self-end">
@@ -22,13 +22,10 @@
             </div>
         </div>
     </form>
-    <table class="table table-striped table-sm">
-        <thead>
-            <th scope="col">#</th>
-            <th scope="col">Obraz</th>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
+    <div class="p-3">
+        {% if result %}
+        Kod wyjściowy: {{ result.exit_code }}<br>
+        Rezultat: {{ result.output }}
+        {% endif %}
+    </div>
 </div>
