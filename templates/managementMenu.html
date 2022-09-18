@@ -1,0 +1,74 @@
+<div>
+    <ul class="list-group list-group-horizontal flex-wrap">
+        <li class="list-group-item d-flex align-items-end">
+                <span class="pt-1 p-1">
+                    <a class="link-secondary text-decoration-none"
+                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=info{% endif %}">Info</a>
+                </span>
+                <span class="material-symbols-outlined p-1">
+                    <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
+                       data-bs-title="Wyświetla informacje o silniku Dockera">help</a>
+                </span>
+        </li>
+        <li class="list-group-item d-flex align-items-end">
+                <span class="pt-1 p-1">
+                    <a class="link-secondary text-decoration-none"
+                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=containersList{% endif %}">Containers</a>
+                </span>
+                <span class="material-symbols-outlined p-1">
+                    <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
+                       data-bs-title="Wyświetla kontenery i pozwala wykonywać na nich operacje">help</a>
+                </span>
+        </li>
+        <li class="list-group-item d-flex align-items-end">
+                <span class="pt-1 p-1">
+                    <a class="link-secondary text-decoration-none"
+                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=imagesList{% endif %}">Images</a>
+                </span>
+                <span class="material-symbols-outlined p-1">
+                    <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
+                       data-bs-title="Wyświetla obrazy i pozwala wykonywać na nich operacje">help</a>
+                </span>
+        </li>
+        <li class="list-group-item d-flex align-items-end">
+                <span class="pt-1 p-1">
+                    <a class="link-secondary text-decoration-none"
+                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=exec{% endif %}">Exec</a>
+                </span>
+                <span class="material-symbols-outlined p-1">
+                    <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
+                       data-bs-title="Wykonanie zdalnie komendy wewnątrz kontenera">help</a>
+                </span>
+        </li>
+        <li class="list-group-item d-flex align-items-end">
+                <span class="pt-1 p-1">
+                    <a class="link-secondary text-decoration-none"
+                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=volumesList{% endif %}">Volumes</a>
+                </span>
+                <span class="material-symbols-outlined p-1">
+                    <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
+                   data-bs-title="Wyświetla woluminy i pozwala wykonywać na nich operacje">help</a>
+            </span>
+        </li>
+        <li class="list-group-item d-flex align-items-end">
+                <span class="pt-1 p-1">
+                    <a class="link-secondary text-decoration-none"
+                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=networksList{% endif %}">Networks</a>
+                </span>
+                <span class="material-symbols-outlined p-1">
+                    <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
+                   data-bs-title="Wyświetla sieci i pozwala wykonywać na nich operacje">help</a>
+            </span>
+        </li>
+        <li class="list-group-item d-flex align-items-end">
+                <span class="pt-1 p-1">
+                    <a class="link-secondary text-decoration-none"
+                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=pluginsList{% endif %}">Plugins</a>
+                </span>
+                <span class="material-symbols-outlined p-1">
+                    <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
+                       data-bs-title="Wyświetla zainstalowane pluginy">help</a>
+                </span>
+        </li>
+    </ul>
+</div>

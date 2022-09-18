@@ -12,6 +12,7 @@ registry = os.getenv('REGISTRY_ADDRESS')
 dockerEngines = os.getenv('DOCKER_HOST')
 client = docker.from_env()
 
+
 @app.route('/')
 def get_index():
     return render_template('index.html', name='index')
@@ -19,7 +20,7 @@ def get_index():
 
 @app.route('/registry')
 def get_registry_view():
-    return render_template('registryView.html', name='registryView', registry=registry)
+    return render_template('registry.html', name='registryView', registry=registry)
 
 
 @app.route('/management', methods=['GET', 'POST'])
@@ -44,7 +45,7 @@ def get_management_view():
         response = cmd.get_networks_list(docker_engine)
     elif command == "pluginsList":
         response = cmd.get_plugins_list(docker_engine)
-    return render_template('managementView.html', name='managementView', dockerEngines=dockerEngines, response=response,
+    return render_template('management.html', dockerEngines=docker_engine, response=response,
                            result=result)
 
 

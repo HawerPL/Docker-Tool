@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+{% block application %}
+<div class="row g-0" style="min-height: 100vh">
+    <div class="d-flex flex-column p-3 text-white bg-dark col-12 col-sm-12 col-md-4 col-xxl-2">
+        <h1>Docker management</h1>
+        <hr>
+        <span>Skonfigurowane serwery</span>
+        <ul class="nav nav-pills flex-column mb-auto" id="navigation">
+            {% for item in get_docker_engines() %}
+                <li class="nav-item">
+                    <div class="d-flex justify-content-between">
+                        <a class="link-secondary" href="./management?docker_engine={{ item }}">{{ item }}</a>
+                        <span>status</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="p-1 col-12 col-sm-12 col-md-4 col-xxl-2" style="position: fixed; left: 0; bottom: 0">
+            <hr>
+            <span>Podłączony serwer: {{ dockerEngines }}</span>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-8 col-xxl-10">
+        {% include "managementMenu.html" %}
+        {% include "managementContent.html" %}
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+{% endblock %}
