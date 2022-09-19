@@ -1,63 +1,84 @@
 import requests as req
-import docker
-from flask import request
-
-client = docker.from_env()
 
 
-def get_info(docker_engine):
+def get_info(docker_client):
     try:
-        response = client.info()
+        response = docker_client.info()
     except req.exceptions.ConnectionError:
         response = ""
     return response
 
 
-def get_images_list(docker_engine):
+def get_images_list(docker_client):
     try:
-        response = client.images.list()
+        response = docker_client.images.list()
     except req.exceptions.ConnectionError:
         response = ""
     return response
 
 
-def get_container_list(docker_engine):
+def get_container_list(docker_client):
     try:
-        response = client.containers.list(all=True)
+        response = docker_client.containers.list(all=True)
     except req.exceptions.ConnectionError:
         response = ""
     return response
 
 
-def execute_command(docker_engine, container_id, command):
+def execute_command(docker_client, container_id, command):
     try:
-        container = client.containers.get(container_id)
+        container = docker_client.containers.get(container_id)
         response = container.exec_run(command)
     except req.exceptions.ConnectionError:
         response = ""
     return response
 
 
-def get_volumes_list(docker_engine):
+def get_volumes_list(docker_client):
     try:
-        response = client.volumes.list()
+        response = docker_client.volumes.list()
     except req.exceptions.ConnectionError:
         response = ""
     return response
 
 
-def get_networks_list(docker_engine):
+def get_networks_list(docker_client):
     try:
-        response = client.networks.list()
+        response = docker_client.networks.list()
     except req.exceptions.ConnectionError:
         response = ""
     return response
 
 
-def get_plugins_list(docker_engine):
+def get_plugins_list(docker_client):
     try:
-        response = client.plugins.list()
+        response = docker_client.plugins.list()
     except req.exceptions.ConnectionError:
         response = ""
     return response
+
+
+def execute_container_operation(docker_client, container_id, operation):
+    try:
+        container = docker_client.containers.get(container_id)
+        if operation == "start":
+            container.start()
+        elif operation == "restart":
+            container.restart()
+        elif operation == "pause":
+            container.pause()
+        elif operation == "unpause":
+            container.unpause()
+        elif operation == "update":
+            container.update()
+        elif operation == "stop":
+            container.stop()
+        elif operation == "remove":
+            container.remove()
+        response = "OK"
+    except req.exceptions.ConnectionError:
+        response = ""
+    return response
+
+
 

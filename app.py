@@ -2,15 +2,18 @@ import requests.exceptions
 from flask import Flask
 from flask import render_template
 from flask import request
-import os
+import json
 import docker
 import requests as req
 import commands as cmd
 
+
 app = Flask(__name__)
-registry = os.getenv('REGISTRY_ADDRESS')
-dockerEngines = os.getenv('DOCKER_HOST')
-client = docker.from_env()
+
+with open('appsettings.json', 'r') as file:
+    config = json.load(file)
+
+registry = config['registryAddresses'][0]['address']
 
 
 @app.route('/')
@@ -20,6 +23,7 @@ def get_index():
 
 @app.route('/registry')
 def get_registry_view():
+
     return render_template('registry.html', name='registryView', registry=registry)
 
 
@@ -28,24 +32,31 @@ def get_management_view():
     response = ""
     result = ""
     command = get_command()
-    docker_engine = get_docker_engine()
+
+    docker_engines = config['dockerHosts']
+    docker_engine = request.args.get('docker_engine', type=str)
+    if docker_engine:
+        client = docker.DockerClient(base_url=docker_engine)
+
     if command == 'info':
-        response = cmd.get_info(docker_engine)
+        response = cmd.get_info(client)
     elif command == "containersList":
-        response = cmd.get_container_list(docker_engine)
+        if request.method == "POST":
+            cmd.execute_container_operation(client, request.form.get('container-id'), request.form.get('operation'))
+        response = cmd.get_container_list(client)
     elif command == "imagesList":
-        response = cmd.get_images_list(docker_engine)
+        response = cmd.get_images_list(client)
     elif command == "exec":
-        response = cmd.get_container_list(docker_engine)
+        response = cmd.get_container_list(client)
         if request.method == 'POST':
-            result = cmd.execute_command(docker_engine, request.form.get('container-id'), request.form.get('command'))
+            result = cmd.execute_command(client, request.form.get('container-id'), request.form.get('command'))
     elif command == "volumesList":
-        response = cmd.get_volumes_list(docker_engine)
+        response = cmd.get_volumes_list(client)
     elif command == "networksList":
-        response = cmd.get_networks_list(docker_engine)
+        response = cmd.get_networks_list(client)
     elif command == "pluginsList":
-        response = cmd.get_plugins_list(docker_engine)
-    return render_template('management.html', dockerEngines=docker_engine, response=response,
+        response = cmd.get_plugins_list(client)
+    return render_template('management.html', docker_engines=docker_engines, docker_engine=docker_engine, response=response,
                            result=result)
 
 
@@ -58,19 +69,14 @@ def get_repositories():
     return response
 
 
-@app.template_global(name='get_docker_engines')
-def get_docker_engines():
-    return [dockerEngines]
-
-
-@app.template_global(name='ping_docker_engines')
-def ping_docker_engines():
-    try:
-        #obecnie pinguje jeden serwer, ponieważ wsparcie tylko dla jednego serwera
-        response = req.get(dockerEngines + '_ping')
-    except req.exceptions.ConnectionError:
-        response = "NOK"
-    return response
+# @app.template_global(name='ping_docker_engines')
+# def ping_docker_engines():
+#     try:
+#         #obecnie pinguje jeden serwer, ponieważ wsparcie tylko dla jednego serwera
+#         response = req.get(dockerEngines + '_ping')
+#     except req.exceptions.ConnectionError:
+#         response = "NOK"
+#     return response
 
 
 @app.template_global(name='get_tags')

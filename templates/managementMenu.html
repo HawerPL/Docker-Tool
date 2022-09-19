@@ -3,7 +3,7 @@
         <li class="list-group-item d-flex align-items-end">
                 <span class="pt-1 p-1">
                     <a class="link-secondary text-decoration-none"
-                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=info{% endif %}">Info</a>
+                       href="./management?{% if docker_engine %}docker_engine={{ docker_engine }}&command=info{% endif %}">Info</a>
                 </span>
                 <span class="material-symbols-outlined p-1">
                     <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
@@ -13,7 +13,7 @@
         <li class="list-group-item d-flex align-items-end">
                 <span class="pt-1 p-1">
                     <a class="link-secondary text-decoration-none"
-                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=containersList{% endif %}">Containers</a>
+                       href="./management?{% if docker_engine %}docker_engine={{ docker_engine }}&command=containersList{% endif %}">Containers</a>
                 </span>
                 <span class="material-symbols-outlined p-1">
                     <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
@@ -23,7 +23,7 @@
         <li class="list-group-item d-flex align-items-end">
                 <span class="pt-1 p-1">
                     <a class="link-secondary text-decoration-none"
-                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=imagesList{% endif %}">Images</a>
+                       href="./management?{% if docker_engine %}docker_engine={{ docker_engine }}&command=imagesList{% endif %}">Images</a>
                 </span>
                 <span class="material-symbols-outlined p-1">
                     <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
@@ -33,7 +33,7 @@
         <li class="list-group-item d-flex align-items-end">
                 <span class="pt-1 p-1">
                     <a class="link-secondary text-decoration-none"
-                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=exec{% endif %}">Exec</a>
+                       href="./management?{% if docker_engine %}docker_engine={{ docker_engine }}&command=exec{% endif %}">Exec</a>
                 </span>
                 <span class="material-symbols-outlined p-1">
                     <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
@@ -43,7 +43,7 @@
         <li class="list-group-item d-flex align-items-end">
                 <span class="pt-1 p-1">
                     <a class="link-secondary text-decoration-none"
-                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=volumesList{% endif %}">Volumes</a>
+                       href="./management?{% if docker_engine %}docker_engine={{ docker_engine }}&command=volumesList{% endif %}">Volumes</a>
                 </span>
                 <span class="material-symbols-outlined p-1">
                     <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
@@ -53,7 +53,7 @@
         <li class="list-group-item d-flex align-items-end">
                 <span class="pt-1 p-1">
                     <a class="link-secondary text-decoration-none"
-                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=networksList{% endif %}">Networks</a>
+                       href="./management?{% if docker_engine %}docker_engine={{ docker_engine }}&command=networksList{% endif %}">Networks</a>
                 </span>
                 <span class="material-symbols-outlined p-1">
                     <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"
@@ -63,7 +63,7 @@
         <li class="list-group-item d-flex align-items-end">
                 <span class="pt-1 p-1">
                     <a class="link-secondary text-decoration-none"
-                       href="./management?{% if dockerEngines %}docker_engine={{ dockerEngines }}&command=pluginsList{% endif %}">Plugins</a>
+                       href="./management?{% if docker_engine %}docker_engine={{ docker_engine }}&command=pluginsList{% endif %}">Plugins</a>
                 </span>
                 <span class="material-symbols-outlined p-1">
                     <a class="text-secondary text-decoration-none" data-bs-toggle="tooltip"

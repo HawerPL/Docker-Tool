@@ -1,13 +1,13 @@
 <div class="d-flex">
     <table class="table table-striped table-sm">
         <thead>
-            <th scope="col">#</th>
-            <th scope="col">Network</th>
+            <th class="text-center" scope="col">#</th>
+            <th class="text-center" scope="col">Network</th>
         </thead>
         <tbody>
             {% for network in response %}
             <tr>
-                <td>{{ loop.index }}</td>
+                <td class="text-center">{{ loop.index }}</td>
                 <td>
                     <span>Nazwa: {{ network.name }}</span><br>
                     <span>ID: {{ network.id }}</span><br>
