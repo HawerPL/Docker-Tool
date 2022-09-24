@@ -1,18 +1,19 @@
-import requests.exceptions
-from flask import Flask
-from flask import render_template
-from flask import request
+from flask import Flask, render_template, request
 import json
 import docker
 import requests as req
 import commands as cmd
 
-
 app = Flask(__name__)
+
+if __name__ == '__main__':
+    app.run()
 
 with open('appsettings.json', 'r') as file:
     config = json.load(file)
 
+
+# Global variables
 registry = config['registryAddresses'][0]['address']
 
 
@@ -28,36 +29,40 @@ def get_registry_view():
 
 
 @app.route('/management', methods=['GET', 'POST'])
-def get_management_view():
+@app.route('/management/<command>', methods=['GET', 'POST'])
+def get_management_view(command=""):
     response = ""
     result = ""
-    command = get_command()
 
     docker_engines = config['dockerHosts']
     docker_engine = request.args.get('docker_engine', type=str)
     if docker_engine:
         client = docker.DockerClient(base_url=docker_engine)
 
-    if command == 'info':
-        response = cmd.get_info(client)
-    elif command == "containersList":
-        if request.method == "POST":
-            cmd.execute_container_operation(client, request.form.get('container-id'), request.form.get('operation'))
-        response = cmd.get_container_list(client)
-    elif command == "imagesList":
-        response = cmd.get_images_list(client)
-    elif command == "exec":
-        response = cmd.get_container_list(client)
-        if request.method == 'POST':
-            result = cmd.execute_command(client, request.form.get('container-id'), request.form.get('command'))
-    elif command == "volumesList":
-        response = cmd.get_volumes_list(client)
-    elif command == "networksList":
-        response = cmd.get_networks_list(client)
-    elif command == "pluginsList":
-        response = cmd.get_plugins_list(client)
-    return render_template('management.html', docker_engines=docker_engines, docker_engine=docker_engine, response=response,
-                           result=result)
+    if docker_engine:
+        match command:
+            case 'info':
+                response = cmd.get_info(client)
+            case 'containersList':
+                if request.method == "POST":
+                    cmd.execute_container_operation(client, request.form.get('container-id'),
+                                                    request.form.get('operation'))
+                response = cmd.get_container_list(client)
+            case 'imagesList':
+                response = cmd.get_images_list(client)
+            case 'exec':
+                response = cmd.get_container_list(client)
+                if request.method == 'POST':
+                    result = cmd.execute_command(client, request.form.get('container-id'), request.form.get('command'))
+            case 'volumesList':
+                response = cmd.get_volumes_list(client)
+            case 'networksList':
+                response = cmd.get_networks_list(client)
+            case 'pluginsList':
+                response = cmd.get_plugins_list(client)
+
+    return render_template('management.html', docker_engines=docker_engines, docker_engine=docker_engine,
+                           response=response, result=result, command=command)
 
 
 @app.template_global(name='get_repositories')
@@ -82,23 +87,11 @@ def get_repositories():
 @app.template_global(name='get_tags')
 def get_tags():
     repository = request.args.get('repository', type=str)
-
-    if repository is None:
-        # return "Wybierz repozytorium w bocznym menu"
-        return ""
-    else:
+    if repository is not None:
         response = req.get(registry + '/' + repository + '/tags/list').json()
         return response['tags']
-
-
-@app.template_global(name="get_command")
-def get_command():
-    command = request.args.get('command', type=str)
-    if command is None:
-        # return "Wybierz repozytorium w bocznym menu"
-        return ""
     else:
-        return command
+        return ""
 
 
 @app.template_global(name="get_docker_engine")
@@ -115,5 +108,7 @@ def page_not_found(error):
     return render_template("errorPage.html", error_code="404", error_message="Nie znaleziono strony"), 404
 
 
-if __name__ == '__main__':
-    app.run()
+@app.errorhandler(500)
+def page_not_found(error):
+    return render_template("errorPage.html", error_code="500", error_message="Wystąpił błąd po stronie serwera"), 500
+

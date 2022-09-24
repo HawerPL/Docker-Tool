@@ -13,7 +13,7 @@
             {% for item in docker_engines %}
                 <li class="nav-item">
                     <div class="d-flex justify-content-between">
-                        <a class="link-secondary" href="./management?docker_engine={{ item.address }}"
+                        <a class="link-secondary" href="?docker_engine={{ item.address }}"
                            data-bs-toggle="tooltip" data-bs-title="{{ item.address }}">{{ item.name }}</a>
                         <span class="material-symbols-outlined">circle</span>
                     </div>
