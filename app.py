@@ -110,5 +110,10 @@ def get_docker_engine():
         return docker_engine
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("errorPage.html", error_code="404", error_message="Nie znaleziono strony"), 404
+
+
 if __name__ == '__main__':
     app.run()
