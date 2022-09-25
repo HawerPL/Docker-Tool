@@ -12,7 +12,6 @@ if __name__ == '__main__':
 with open('appsettings.json', 'r') as file:
     config = json.load(file)
 
-
 # Global variables
 registry = config['registryAddresses'][0]['address']
 
@@ -24,7 +23,6 @@ def get_index():
 
 @app.route('/registry')
 def get_registry_view():
-
     return render_template('registry.html', name='registryView', registry=registry)
 
 
@@ -50,6 +48,9 @@ def get_management_view(command=""):
                 response = cmd.get_container_list(client)
             case 'imagesList':
                 response = cmd.get_images_list(client)
+                if request.method == 'POST':
+                    result = cmd.execute_image_operation(client, request.form.get('image-id'),
+                                                         request.form.get('operation'))
             case 'exec':
                 response = cmd.get_container_list(client)
                 if request.method == 'POST':
@@ -58,6 +59,9 @@ def get_management_view(command=""):
                 response = cmd.get_volumes_list(client)
             case 'networksList':
                 response = cmd.get_networks_list(client)
+                if request.method == 'POST':
+                    result = cmd.execute_network_operation(client, request.form.get('network-id'),
+                                                           request.form.get('operation'))
             case 'pluginsList':
                 response = cmd.get_plugins_list(client)
 
@@ -74,14 +78,15 @@ def get_repositories():
     return response
 
 
-# @app.template_global(name='ping_docker_engines')
-# def ping_docker_engines():
-#     try:
-#         #obecnie pinguje jeden serwer, ponieważ wsparcie tylko dla jednego serwera
-#         response = req.get(dockerEngines + '_ping')
-#     except req.exceptions.ConnectionError:
-#         response = "NOK"
-#     return response
+def ping_docker_engines(docker_engines):
+    try:
+        for docker_engine in docker_engines:
+            address = docker_engine['address']
+            client = docker.DockerClient(base_url=address)
+            response = client.ping()
+    except req.exceptions.ConnectionError:
+        response = "NOK"
+    return response
 
 
 @app.template_global(name='get_tags')
@@ -110,5 +115,5 @@ def page_not_found(error):
 
 @app.errorhandler(500)
 def page_not_found(error):
-    return render_template("errorPage.html", error_code="500", error_message="Wystąpił błąd po stronie serwera"), 500
-
+    return render_template("errorPage.html", error_code="500",
+                           error_message="Wystąpił błąd po stronie serwera: " + str(error)), 500

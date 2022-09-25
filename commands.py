@@ -81,4 +81,24 @@ def execute_container_operation(docker_client, container_id, operation):
     return response
 
 
+def execute_image_operation(docker_client, image_id, operation):
+    try:
+        image = docker_client.images.get(image_id)
+        if operation == "remove":
+            image.remove()
+            response = "OK"
+    except req.exceptions.ConnectionError:
+        response = ""
+    return response
+
+
+def execute_network_operation(docker_client, network_id, operation):
+    try:
+        network = docker_client.networks.get(network_id)
+        if operation == "remove":
+            network.remove()
+            response = "OK"
+    except req.exceptions.ConnectionError:
+        response = ""
+    return response
 

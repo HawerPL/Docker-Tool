@@ -3,6 +3,7 @@
         <thead>
             <th class="text-center" scope="col">#</th>
             <th class="text-center" scope="col">Network</th>
+            <th class="text-center" scope="col">Operacje</th>
         </thead>
         <tbody>
             {% for network in response %}
@@ -46,6 +47,16 @@
                         </ul>
                     {% endif %}
                     <span>IPAM: {{ network.attrs.IPAM }}</span><br>
+                </td>
+                <td class="align-middle">
+                    <form action="/management/networksList?docker_engine={{ docker_engine }}" method="POST">
+                        <div class="d-flex justify-content-center">
+                            <div class="btn-group-vertical" role="group">
+                                <input class="visually-hidden" name="network-id" value="{{ network.id }}">
+                                <button type="submit" name="operation" value="remove" class="btn btn-secondary p-1 p-xxl-2">Remove</button>
+                         </div>
+                        </div>
+                    </form>
                 </td>
             </tr>
             {% endfor %}

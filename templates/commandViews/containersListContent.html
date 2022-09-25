@@ -42,7 +42,7 @@
 {#                <span>{{ container.attrs }}</span><br>#}
                 </td>
                 <td class="align-middle">
-                    <form action="/management?docker_engine={{ docker_engine }}&command=containersList" method="POST">
+                    <form action="/management/containersList?docker_engine={{ docker_engine }}" method="POST">
                         <div class="d-flex justify-content-center">
                             <div class="btn-group-vertical" role="group">
                                 <input class="visually-hidden" name="container-id" value="{{ container.id }}">
