@@ -3,6 +3,7 @@
         <thead>
             <th class="text-center" scope="col">#</th>
             <th class="text-center" scope="col">Woluminy</th>
+            <th class="text-center" scope="col">Operacje</th>
         </thead>
         <tbody>
             {% for volume in response %}
@@ -20,6 +21,16 @@
                     <span>Driver: {{ volume.attrs.Driver }}</span><br>
                     <span>Labels: {{ volume.attrs.Labels }}</span><br>
                     <span>Data utworzenia: {{ volume.attrs.CreatedAt }}</span><br>
+                </td>
+                <td class="align-middle">
+                    <form action="/management/volumesList?docker_engine={{ docker_engine }}" method="POST">
+                        <div class="d-flex justify-content-center">
+                            <div class="btn-group-vertical" role="group">
+                                <input class="visually-hidden" name="volume-id" value="{{ volume.id }}">
+                                <button type="submit" name="operation" value="remove" class="btn btn-secondary p-1 p-xxl-2">Remove</button>
+                         </div>
+                        </div>
+                    </form>
                 </td>
             </tr>
             {% endfor %}

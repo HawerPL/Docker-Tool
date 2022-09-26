@@ -102,3 +102,14 @@ def execute_network_operation(docker_client, network_id, operation):
         response = ""
     return response
 
+
+def execute_volume_operation(docker_client, volume_id, operation):
+    try:
+        volume = docker_client.volumes.get(volume_id)
+        if operation == "remove":
+            volume.remove()
+            response = "OK"
+    except req.exceptions.ConnectionError:
+        response = ""
+    return response
+

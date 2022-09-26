@@ -1,6 +1,6 @@
 <!--Tu powinien być input text z komendą i input z id kontenera, możliwośc pobrania listy koneterów, + możliwość predefionwoania komend w pliku konfiguracyjnym np. w liście roziwjanej nginx -s reload -->
 <div class="d-flex flex-column">
-    <form class="p-3" action="/management?docker_engine={{ docker_engine }}&command=exec" method="POST">
+    <form class="p-3" action="/management/exec?docker_engine={{ docker_engine }}" method="POST">
         <h3>Exec</h3>
         <div class="row p-1">
             <div class="col-md-5">
@@ -13,8 +13,12 @@
             </div>
             <div class="col-md-5">
                 <label>Polecenie</label>
-                <input type="text" class="form-control" name="command">
-{#                Datalist z boootstrapa#}
+                <input type="text" list="commandsDataListOptions" class="form-control" name="command">
+                <datalist id="commandsDataListOptions">
+                    {% for command in get_saved_commands() %}
+                        <option value="{{ command.command }}"> {% if not command.showOnlyCommand %} {{ command.name }} {% endif %}</option>
+                    {% endfor %}
+                </datalist>
             </div>
             <div class="col-md-2 d-flex">
                 <div class="align-self-end">

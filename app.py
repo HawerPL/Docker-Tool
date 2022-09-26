@@ -57,6 +57,9 @@ def get_management_view(command=""):
                     result = cmd.execute_command(client, request.form.get('container-id'), request.form.get('command'))
             case 'volumesList':
                 response = cmd.get_volumes_list(client)
+                if request.method == 'POST':
+                    result = cmd.execute_volume_operation(client, request.form.get('volume-id'),
+                                                          request.form.get('operation'))
             case 'networksList':
                 response = cmd.get_networks_list(client)
                 if request.method == 'POST':
@@ -106,6 +109,11 @@ def get_docker_engine():
         return ""
     else:
         return docker_engine
+
+
+@app.template_global(name="get_saved_commands")
+def get_saved_commands():
+    return config['commands']
 
 
 @app.errorhandler(404)
