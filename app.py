@@ -13,22 +13,23 @@ with open('appsettings.json', 'r') as file:
     config = json.load(file)
 
 # Global variables
-registry = config['registryAddresses'][0]['address']
+registry_addr = config['registryAddresses'][0]['address']
 
 
 @app.route('/')
-def get_index():
+def index():
     return render_template('index.html', name='index')
 
 
 @app.route('/registry')
-def get_registry_view():
-    return render_template('registry.html', name='registryView', registry=registry)
+def registry():
+    return render_template('registry.html', name='registryView', registry=registry_addr)
 
 
+# TODO: Rozdzielić opcje zarządzania na nowe funkcje
 @app.route('/management', methods=['GET', 'POST'])
 @app.route('/management/<command>', methods=['GET', 'POST'])
-def get_management_view(command=""):
+def management(command=""):
     response = ""
     result = ""
 
@@ -75,7 +76,7 @@ def get_management_view(command=""):
 @app.template_global(name='get_repositories')
 def get_repositories():
     try:
-        response = req.get(registry + '/_catalog').json()['repositories']
+        response = req.get(registry_addr + '/_catalog').json()['repositories']
     except req.exceptions.ConnectionError:
         response = ""
     return response
@@ -96,7 +97,7 @@ def ping_docker_engines(docker_engines):
 def get_tags():
     repository = request.args.get('repository', type=str)
     if repository is not None:
-        response = req.get(registry + '/' + repository + '/tags/list').json()
+        response = req.get(registry_addr + '/' + repository + '/tags/list').json()
         return response['tags']
     else:
         return ""

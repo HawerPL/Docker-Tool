@@ -1,6 +1,6 @@
 <!--Tu powinien być input text z komendą i input z id kontenera, możliwośc pobrania listy koneterów, + możliwość predefionwoania komend w pliku konfiguracyjnym np. w liście roziwjanej nginx -s reload -->
 <div class="d-flex flex-column">
-    <form class="p-3" action="/management/exec?docker_engine={{ docker_engine }}" method="POST">
+    <form class="p-3" action="{{ url_for('management') }}/exec?docker_engine={{ docker_engine }}" method="POST">
         <h3>Exec</h3>
         <div class="row p-1">
             <div class="col-md-5">

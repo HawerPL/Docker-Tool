@@ -23,7 +23,7 @@
                     <span>Data utworzenia: {{ volume.attrs.CreatedAt }}</span><br>
                 </td>
                 <td class="align-middle">
-                    <form action="/management/volumesList?docker_engine={{ docker_engine }}" method="POST">
+                    <form action="{{ url_for('management') }}/volumesList?docker_engine={{ docker_engine }}" method="POST">
                         <div class="d-flex justify-content-center">
                             <div class="btn-group-vertical" role="group">
                                 <input class="visually-hidden" name="volume-id" value="{{ volume.id }}">
